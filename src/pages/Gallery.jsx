@@ -1,55 +1,49 @@
-import React, { useState } from 'react';
-import '../styles/Gallery.css'
+import React, { useState } from "react";
+import { Container, Row, Col, Modal } from "react-bootstrap";
+import "../styles/Gallery.css";
 
-// Dummy images (replace these with actual images later)
-const images = [
-    { src: 'image1.jpg', alt: 'Performance 1' },
-    { src: 'image2.jpg', alt: 'Studio Session 1' },
-    { src: 'image3.jpg', alt: 'Performance 2' },
-    { src: 'image4.jpg', alt: 'Studio Session 2' },
-    { src: 'image5.jpg', alt: 'Studio Session 3' },
-    { src: 'image6.jpg', alt: 'Joe' },
-    { src: 'image7.jpg', alt: 'Mama so big' },
-    { src: 'image8.jpg', alt: 'que se cae de la cama por los dos lados' },
-    // Add more images as needed
-];
+// Import images
+import image1 from "../assets/images/gallery1.jpg";
+import image2 from "../assets/images/gallery2.jpg";
+import image3 from "../assets/images/gallery3.jpg";
+import image4 from "../assets/images/gallery4.jpg";
+import image5 from "../assets/images/gallery5.jpg";
+import image6 from "../assets/images/gallery6.jpg";
+
+const images = [image1, image2, image3, image4, image5, image6];
 
 function Gallery() {
-    const [modalOpen, setModalOpen] = useState(false);
-    const [selectedImage, setSelectedImage] = useState('');
+  const [showModal, setShowModal] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
 
-    const openModal = (imgSrc) => {
-        setSelectedImage(imgSrc);
-        setModalOpen(true);
-    };
+  const handleShow = (image) => {
+    setSelectedImage(image);
+    setShowModal(true);
+  };
 
-    const closeModal = () => {
-        setModalOpen(false);
-    };
+  return (
+    <div className="gallery-page">
+      <Container>
+        <h1 className="text-center mb-5">Gallery</h1>
+        <Row>
+          {images.map((img, index) => (
+            <Col key={index} md={4} sm={6} xs={12} className="mb-4">
+              <div className="gallery-image-container" onClick={() => handleShow(img)}>
+                <img src={img} alt={`Gallery ${index + 1}`} className="gallery-image" />
+              </div>
+            </Col>
+          ))}
+        </Row>
+      </Container>
 
-    return (
-        <div className="gallery-page">
-            <h1>Gallery</h1>
-            <p>Photos and videos from my performances and studio sessions.</p>
-
-            {/* Horizontal scroll gallery */}
-            <div className="gallery">
-                {images.map((image, index) => (
-                    <div className="gallery-item" key={index} onClick={() => openModal(image.src)}>
-                        <img src={image.src} alt={image.alt} />
-                    </div>
-                ))}
-            </div>
-
-            {/* Modal for larger image */}
-            {modalOpen && (
-                <div className="modal" onClick={closeModal}>
-                    <span className="close">&times;</span>
-                    <img src={selectedImage} alt="Large View" className="modal-content" />
-                </div>
-            )}
-        </div>
-    );
+      {/* Image Modal */}
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Body className="text-center">
+          {selectedImage && <img src={selectedImage} alt="Enlarged" className="modal-image" />}
+        </Modal.Body>
+      </Modal>
+    </div>
+  );
 }
 
 export default Gallery;
