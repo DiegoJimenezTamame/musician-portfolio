@@ -73,7 +73,3 @@ Contributions are welcome!
 4. Push to the branch: git push origin feature/your-feature-name 
 5. Open a pull request 
 
-📄 License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-Portfolio Website for musicians (React.js)
